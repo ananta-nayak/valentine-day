@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-romantic-black text-white antialiased overflow-x-hidden font-sans m-0;
+    font-family: 'Outfit', sans-serif;
+  }
+  #root {
+    @apply min-h-screen w-full;
+  }
+}
+
+@layer components {
+  .section {
+    @apply min-h-screen w-full max-w-full flex flex-col justify-center items-center px-4 py-8 md:px-8 md:py-12 snap-start;
+  }
+  .glass-card {
+    @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-romantic-pink via-romantic-rose to-romantic-violet bg-clip-text text-transparent;
+  }
+  .glow-border {
+    box-shadow: 0 -2px 20px rgba(255, 77, 109, 0.3), 0 0 40px rgba(168, 85, 247, 0.1);
+  }
+}
+
+.font-script {
+  font-family: 'Dancing Script', cursive;
+}
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.hero-bg {
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(255, 77, 109, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 80% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+    linear-gradient(180deg, #0a0608 0%, #1a0a1e 40%, #120b0e 100%);
+}
