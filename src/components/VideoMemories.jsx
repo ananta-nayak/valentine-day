@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
 import { MEMORY_VIDEO_PATH, HER_NAME } from '../data/constants';
 
 export default function VideoMemories({ onOpenVideo }) {
   const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const pause = () => videoRef.current?.pause();
+    window.addEventListener('pauseAllVideos', pause);
+    return () => window.removeEventListener('pauseAllVideos', pause);
+  }, []);
 
   return (
     <section className="section py-20 relative">
@@ -64,6 +71,7 @@ export default function VideoMemories({ onOpenVideo }) {
           ) : (
             <div className="relative aspect-video rounded-xl overflow-hidden bg-black/60 group">
               <video
+                ref={videoRef}
                 src={MEMORY_VIDEO_PATH}
                 className="w-full h-full object-contain"
                 preload="auto"

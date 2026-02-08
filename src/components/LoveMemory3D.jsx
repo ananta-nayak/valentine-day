@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_IMAGES, HER_NAME } from '../data/constants';
 
@@ -8,10 +8,12 @@ const RADIUS = 380;
 const CARD_WIDTH = 240;
 const CARD_HEIGHT = 300;
 const SLIDER_MIN_HEIGHT = 620;
+const SWIPE_THRESHOLD = 50;
 
 export default function LoveMemory3D() {
   const [center, setCenter] = useState(0);
   const [isNarrow, setIsNarrow] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
+  const touchStartX = useRef(0);
 
   useEffect(() => {
     const onResize = () => setIsNarrow(window.innerWidth < 768);
@@ -22,13 +24,33 @@ export default function LoveMemory3D() {
   const radius = isNarrow ? RADIUS * 0.7 : RADIUS;
   const cardW = isNarrow ? 160 : CARD_WIDTH;
   const cardH = isNarrow ? 200 : CARD_HEIGHT;
+  const total = GALLERY_IMAGES.length;
+
+  const goNext = useCallback(() => setCenter((c) => (c + 1) % total), [total]);
+  const goPrev = useCallback(() => setCenter((c) => (c - 1 + total) % total), [total]);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setCenter((c) => (c + 1) % GALLERY_IMAGES.length);
+      setCenter((c) => (c + 1) % total);
     }, 3500);
     return () => clearInterval(id);
-  }, []);
+  }, [total]);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const delta = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(delta) >= SWIPE_THRESHOLD) {
+      delta > 0 ? goNext() : goPrev();
+    }
+  };
+
+  const handleCardClick = (index) => {
+    if ((index - center + total) % total === 0) return;
+    setCenter(index);
+  };
 
   return (
     <section className="section py-20 min-h-[85vh] flex flex-col justify-center">
@@ -58,8 +80,10 @@ export default function LoveMemory3D() {
           viewport={{ once: true }}
         >
           <div
-            className="relative w-full max-w-2xl mx-auto"
-            style={{ perspective: '1200px', height: radius * 1.15 }}
+            className="relative w-full max-w-2xl mx-auto select-none touch-pan-y"
+            style={{ perspective: '1200px', height: radius * 1.15, touchAction: 'pan-y' }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <div className="absolute inset-0 flex justify-center items-center">
               <AnimatePresence initial={false}>
@@ -77,7 +101,16 @@ export default function LoveMemory3D() {
                   return (
                     <motion.div
                       key={i}
-                      className="absolute rounded-2xl overflow-hidden border-2 border-white/25 shadow-2xl cursor-default"
+                      role="button"
+                      tabIndex={0}
+                      className="absolute rounded-2xl overflow-hidden border-2 border-white/25 shadow-2xl cursor-pointer"
+                      onClick={() => handleCardClick(i)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleCardClick(i);
+                        }
+                      }}
                       style={{
                         width: cardW,
                         height: cardH,

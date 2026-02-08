@@ -4,14 +4,14 @@ import { HER_NAME } from '../data/constants';
 
 export default function FinalMessage() {
   return (
-    <section className="section py-20 relative overflow-hidden">
+    <section className="section py-12 relative min-h-0 border-0" style={{ minHeight: 'auto' }}>
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.div
-          className="text-romantic-pink/10 w-64 h-64 md:w-96 md:h-96"
-          animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0.75, 0.4] }}
+          className="text-romantic-pink/35 w-64 h-64 md:w-96 md:h-96"
+          animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.85, 0.5] }}
           transition={{ duration: 4, repeat: Infinity }}
         >
-          <Heart className="w-full h-full fill-current" />
+          <Heart className="w-full h-full fill-current" strokeWidth={0} />
         </motion.div>
       </div>
       <motion.div
@@ -31,7 +31,7 @@ export default function FinalMessage() {
           "If I had a choice again, I'd still choose you, {HER_NAME.split(' ')[0]} — every single time."
         </motion.p>
         <motion.p
-          className="mt-6 text-white/60 text-sm md:text-base"
+          className="mt-4 text-white/60 text-sm md:text-base"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

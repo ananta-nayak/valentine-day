@@ -12,7 +12,7 @@ import SurpriseVideo from './components/SurpriseVideo';
 import FinalMessage from './components/FinalMessage';
 import Footer from './components/Footer';
 import MediaModal from './components/MediaModal';
-import { YES_FOREVER_SONG, VIDEO_MODAL_TITLE, DAY_VIDEOS, LOCAL_VIDEO_BASE, LOCAL_VIDEO_PATH, MEMORY_VIDEO_PATH } from './data/constants';
+import { VIDEO_MODAL_TITLE, DAY_VIDEOS, LOCAL_VIDEO_BASE, LOCAL_VIDEO_PATH, MEMORY_VIDEO_PATH } from './data/constants';
 
 export default function App() {
   const [mediaModal, setMediaModal] = useState({ open: false, title: '', videoPath: null });
@@ -22,6 +22,7 @@ export default function App() {
     const videoPath = typeof dayIndex === 'number' && DAY_VIDEOS[dayIndex]
       ? `${LOCAL_VIDEO_BASE}${DAY_VIDEOS[dayIndex]}.mp4`
       : LOCAL_VIDEO_PATH;
+    window.dispatchEvent(new CustomEvent('pauseAllVideos'));
     setMediaModal({ open: true, title, videoPath });
   }, []);
 
@@ -31,10 +32,10 @@ export default function App() {
 
   const handleAccept = useCallback(() => {
     setProposalAccepted(true);
-    setMediaModal({ open: true, title: YES_FOREVER_SONG.title, videoPath: LOCAL_VIDEO_PATH });
   }, []);
 
   const openVideoPopup = useCallback(() => {
+    window.dispatchEvent(new CustomEvent('pauseAllVideos'));
     setMediaModal({ open: true, title: VIDEO_MODAL_TITLE, videoPath: MEMORY_VIDEO_PATH });
   }, []);
 

@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SURPRISE_VIDEO_PATH, HER_NAME } from '../data/constants';
 
 export default function SurpriseVideo() {
   const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const pause = () => videoRef.current?.pause();
+    window.addEventListener('pauseAllVideos', pause);
+    return () => window.removeEventListener('pauseAllVideos', pause);
+  }, []);
+
   return (
     <motion.section
-      className="section py-20"
+      className="section py-12"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2 }}
@@ -21,7 +29,7 @@ export default function SurpriseVideo() {
           For You, {HER_NAME.split(' ')[0]}
         </motion.h2>
         <motion.p
-          className="text-center font-serif text-white/80 italic text-lg mb-8"
+          className="text-center font-serif text-white/80 italic text-lg mb-5"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
@@ -42,6 +50,7 @@ export default function SurpriseVideo() {
             </div>
           ) : (
             <video
+              ref={videoRef}
               src={SURPRISE_VIDEO_PATH}
               className="w-full aspect-video object-contain"
               controls

@@ -33,7 +33,7 @@ export default function Proposal({ onAccept }) {
   };
 
   return (
-    <section className="section py-10 relative min-h-screen flex flex-col justify-center">
+    <section className="section py-6 relative min-h-screen flex flex-col justify-center">
       <div className="absolute inset-0 bg-romantic-black/92" />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(28)].map((_, i) => (
@@ -104,7 +104,7 @@ export default function Proposal({ onAccept }) {
                 💍❤️
               </motion.p>
               <motion.p
-                className="font-serif text-white/85 text-lg mb-6"
+                className="font-serif text-white/85 text-lg mb-4"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -112,14 +112,14 @@ export default function Proposal({ onAccept }) {
                 Distance is just a number when two hearts are connected. I want to be your constant, {HER_NAME.split(' ')[0]} — today and always.
               </motion.p>
               <motion.p
-                className="text-white/70 text-sm md:text-base mb-8 max-w-md mx-auto"
+                className="text-white/70 text-sm md:text-base mb-5 max-w-md mx-auto"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
                 From Ahmedabad to Bhubaneswar, my heart only points to you.
               </motion.p>
-              <div className="flex flex-wrap gap-4 justify-center items-center">
+              <div className="flex flex-wrap gap-3 justify-center items-center">
                 <motion.button
                   type="button"
                   className="px-8 py-4 rounded-full bg-gradient-to-r from-romantic-pink to-romantic-violet text-white font-semibold text-lg shadow-lg shadow-romantic-pink/40"
@@ -178,7 +178,7 @@ export default function Proposal({ onAccept }) {
                 </motion.div>
               ))}
               <motion.h2
-                className="font-script text-4xl md:text-5xl text-gradient mt-4"
+                className="font-script text-4xl md:text-5xl text-gradient mt-3"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -202,7 +202,7 @@ export default function Proposal({ onAccept }) {
                 Can't wait to see you. Save your first hug for me.
               </motion.p>
               <motion.div
-                className="mt-8 flex justify-center"
+                className="mt-5 flex justify-center"
                 animate={{ rotate: [0, 12, -12, 0], scale: [1, 1.12, 1] }}
                 transition={{ repeat: Infinity, duration: 2.5 }}
               >

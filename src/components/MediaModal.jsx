@@ -15,10 +15,13 @@ export default function MediaModal({ isOpen, onClose, title, videoPath: videoPat
   }, [isOpen]);
 
   useEffect(() => {
-    if (isOpen) {
-      setVideoLoadFailed(false);
-      setVideoSrc(videoPathProp || LOCAL_VIDEO_PATH);
+    if (!isOpen) {
+      videoRef.current?.pause();
+      return;
     }
+    videoRef.current?.pause();
+    setVideoLoadFailed(false);
+    setVideoSrc(videoPathProp || LOCAL_VIDEO_PATH);
   }, [isOpen, videoPathProp]);
 
   const handleVideoError = () => {
